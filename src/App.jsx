@@ -1,6 +1,7 @@
 import "./App.css";
 import AboutUs from "./AboutUs";
 import ProductList from "./ProductList";
+import CartItem from "./CartItem";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <a href="#home">Home</a>
           <a href="#about">About Us</a>
           <a href="#plants">Plants</a>
+          <a href="#cart">Cart</a>
         </div>
       </nav>
 
@@ -35,6 +37,10 @@ function App() {
 
       <section id="plants">
         <ProductList />
+      </section>
+
+      <section id="cart">
+        <CartItem />
       </section>
 
     </div>
