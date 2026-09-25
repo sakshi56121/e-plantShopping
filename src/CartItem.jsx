@@ -13,26 +13,73 @@ function CartItem() {
   );
 
   const totalAmount = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
+    (total, item) =>
+      total + item.price * item.quantity,
     0
   );
 
+  const handleIncrement = (item) => {
+    dispatch(
+      updateQuantity({
+        id: item.id,
+        quantity: item.quantity + 1,
+      })
+    );
+  };
+
+  const handleDecrement = (item) => {
+    if (item.quantity > 1) {
+      dispatch(
+        updateQuantity({
+          id: item.id,
+          quantity: item.quantity - 1,
+        })
+      );
+    }
+  };
+
+  const handleRemove = (id) => {
+    dispatch(removeItem(id));
+  };
+
+  const handleContinueShopping = () => {
+    window.location.hash = "plants";
+  };
+
+  const handleCheckout = () => {
+    alert("Checkout functionality coming soon!");
+  };
+
   if (cartItems.length === 0) {
     return (
-      <section className="cart-page">
+      <section className="cart-page" id="cart">
+
         <h1>Shopping Cart</h1>
+
         <p>Your cart is empty.</p>
+
+        <button onClick={handleContinueShopping}>
+          Continue Shopping
+        </button>
+
       </section>
     );
   }
 
   return (
-    <section className="cart-page">
+    <section className="cart-page" id="cart">
+
       <h1>Shopping Cart</h1>
 
       <div className="cart-items">
+
         {cartItems.map((item) => (
-          <div className="cart-item" key={item.id}>
+
+          <div
+            className="cart-item"
+            key={item.id}
+          >
+
             <img
               src={item.image}
               alt={item.name}
@@ -40,19 +87,18 @@ function CartItem() {
             />
 
             <div className="cart-item-details">
+
               <h2>{item.name}</h2>
-              <p>{item.category}</p>
-              <p>Price: ${item.price}</p>
+
+              <p>
+                Price: ${item.price}
+              </p>
 
               <div className="quantity-controls">
+
                 <button
                   onClick={() =>
-                    dispatch(
-                      updateQuantity({
-                        id: item.id,
-                        quantity: Math.max(1, item.quantity - 1),
-                      })
-                    )
+                    handleDecrement(item)
                   }
                 >
                   −
@@ -62,16 +108,12 @@ function CartItem() {
 
                 <button
                   onClick={() =>
-                    dispatch(
-                      updateQuantity({
-                        id: item.id,
-                        quantity: item.quantity + 1,
-                      })
-                    )
+                    handleIncrement(item)
                   }
                 >
                   +
                 </button>
+
               </div>
 
               <p>
@@ -80,22 +122,41 @@ function CartItem() {
               </p>
 
               <button
-                onClick={() => dispatch(removeItem(item.id))}
+                onClick={() =>
+                  handleRemove(item.id)
+                }
               >
                 Remove
               </button>
+
             </div>
+
           </div>
+
         ))}
+
       </div>
 
       <div className="cart-summary">
+
         <h2>
           Total: ${totalAmount.toFixed(2)}
         </h2>
 
-        <button>Checkout</button>
+        <button
+          onClick={handleContinueShopping}
+        >
+          Continue Shopping
+        </button>
+
+        <button
+          onClick={handleCheckout}
+        >
+          Checkout
+        </button>
+
       </div>
+
     </section>
   );
 }
