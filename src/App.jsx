@@ -1,10 +1,11 @@
 import "./App.css";
 import AboutUs from "./AboutUs";
+import ProductList from "./ProductList";
 
 function App() {
   return (
     <div className="landing-page">
-      
+
       <nav className="navbar">
         <h2>🌿 Paradise Nursery</h2>
 
@@ -24,12 +25,16 @@ function App() {
             peaceful green paradise.
           </p>
 
-          <button>Explore Plants</button>
+          <button>Get Started</button>
         </div>
       </section>
 
       <section id="about">
         <AboutUs />
+      </section>
+
+      <section id="plants">
+        <ProductList />
       </section>
 
     </div>
