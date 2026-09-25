@@ -2,92 +2,158 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "./CartSlice";
 
-const products = [
+const plantCategories = [
   {
-    id: 1,
-    name: "Snake Plant",
-    price: 25,
     category: "Indoor Plants",
-    image: "/plants/snake-plant.jpg",
+    plants: [
+      {
+        id: 1,
+        name: "Snake Plant",
+        price: 25,
+        image: "/plants/snake-plant.jpg",
+      },
+      {
+        id: 2,
+        name: "Peace Lily",
+        price: 30,
+        image: "/plants/peace-lily.jpg",
+      },
+      {
+        id: 4,
+        name: "Money Plant",
+        price: 15,
+        image: "/plants/money-plant.jpg",
+      },
+    ],
   },
+
   {
-    id: 2,
-    name: "Peace Lily",
-    price: 30,
-    category: "Indoor Plants",
-    image: "/plants/peace-lily.jpg",
-  },
-  {
-    id: 3,
-    name: "Aloe Vera",
-    price: 20,
     category: "Medicinal Plants",
-    image: "/plants/aloe-vera.jpg",
+    plants: [
+      {
+        id: 3,
+        name: "Aloe Vera",
+        price: 20,
+        image: "/plants/aloe-vera.jpg",
+      },
+      {
+        id: 7,
+        name: "Tulsi",
+        price: 12,
+        image: "/plants/tulsi.jpg",
+      },
+    ],
   },
+
   {
-    id: 4,
-    name: "Money Plant",
-    price: 15,
-    category: "Indoor Plants",
-    image: "/plants/money-plant.jpg",
-  },
-  {
-    id: 5,
-    name: "Rose Plant",
-    price: 18,
     category: "Flowering Plants",
-    image: "/plants/rose.jpg",
+    plants: [
+      {
+        id: 5,
+        name: "Rose Plant",
+        price: 18,
+        image: "/plants/rose.jpg",
+      },
+      {
+        id: 8,
+        name: "Hibiscus",
+        price: 24,
+        image: "/plants/hibiscus.jpg",
+      },
+    ],
   },
+
   {
-    id: 6,
-    name: "Jade Plant",
-    price: 22,
     category: "Succulents",
-    image: "/plants/jade.jpg",
+    plants: [
+      {
+        id: 6,
+        name: "Jade Plant",
+        price: 22,
+        image: "/plants/jade.jpg",
+      },
+      {
+        id: 9,
+        name: "Echeveria",
+        price: 20,
+        image: "/plants/echeveria.jpg",
+      },
+    ],
   },
 ];
 
 function ProductList() {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart?.items || []);
+
+  const cartItems = useSelector(
+    (state) => state.cart?.items || []
+  );
 
   const getCartQuantity = (id) => {
-    const item = cartItems.find((item) => item.id === id);
+    const item = cartItems.find(
+      (item) => item.id === id
+    );
+
     return item ? item.quantity : 0;
   };
 
   return (
     <section className="product-list">
+
       <h1>Our Plants</h1>
 
-      <div className="products-grid">
-        {products.map((product) => {
-          const quantity = getCartQuantity(product.id);
+      {plantCategories.map((category) => (
 
-          return (
-            <div className="product-card" key={product.id}>
-              <img
-                src={product.image}
-                alt={product.name}
-                className="product-image"
-              />
+        <div
+          className="plant-category"
+          key={category.category}
+        >
 
-              <h2>{product.name}</h2>
+          <h2>{category.category}</h2>
 
-              <p>{product.category}</p>
+          <div className="products-grid">
 
-              <h3>${product.price}</h3>
+            {category.plants.map((product) => {
 
-              <button
-                onClick={() => dispatch(addItem(product))}
-                disabled={quantity > 0}
-              >
-                {quantity > 0 ? "Added to Cart" : "Add to Cart"}
-              </button>
-            </div>
-          );
-        })}
-      </div>
+              const quantity =
+                getCartQuantity(product.id);
+
+              return (
+                <div
+                  className="product-card"
+                  key={product.id}
+                >
+
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="product-image"
+                  />
+
+                  <h2>{product.name}</h2>
+
+                  <h3>${product.price}</h3>
+
+                  <button
+                    onClick={() =>
+                      dispatch(addItem(product))
+                    }
+                    disabled={quantity > 0}
+                  >
+                    {quantity > 0
+                      ? "Added to Cart"
+                      : "Add to Cart"}
+                  </button>
+
+                </div>
+              );
+            })}
+
+          </div>
+
+        </div>
+      ))}
+
     </section>
   );
 }
