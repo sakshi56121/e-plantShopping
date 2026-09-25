@@ -24,7 +24,7 @@ function App() {
             peaceful green paradise.
           </p>
 
-          <button>Explore Plants</button>
+      <button>Get Started</button>
         </div>
       </section>
 
