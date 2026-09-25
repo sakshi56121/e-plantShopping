@@ -1,43 +1,70 @@
+import { useState } from "react";
 import "./App.css";
+
 import AboutUs from "./AboutUs";
 import ProductList from "./ProductList";
 import CartItem from "./CartItem";
 
 function App() {
+  const [showProductList, setShowProductList] = useState(false);
+
+  const handleGetStartedClick = () => {
+    setShowProductList(true);
+  };
+
   return (
     <div className="landing-page">
 
       <nav className="navbar">
+
         <h2>🌿 Paradise Nursery</h2>
 
         <div className="nav-links">
+
           <a href="#home">Home</a>
+
           <a href="#about">About Us</a>
+
           <a href="#plants">Plants</a>
+
           <a href="#cart">Cart</a>
+
         </div>
+
       </nav>
 
-      <section id="home" className="hero">
-        <div className="hero-content">
-          <h1>Bring Nature Home</h1>
+      {!showProductList && (
+        <>
+          <section id="home" className="hero">
 
-          <p>
-            Discover beautiful plants and create your own
-            peaceful green paradise.
-          </p>
+            <div className="hero-content">
 
-          <button>Get Started</button>
-        </div>
-      </section>
+              <h1>Welcome to Paradise Nursery</h1>
 
-      <section id="about">
-        <AboutUs />
-      </section>
+              <p>
+                Discover beautiful plants and create your own
+                peaceful green paradise.
+              </p>
 
-      <section id="plants">
-        <ProductList />
-      </section>
+              <button onClick={handleGetStartedClick}>
+                Get Started
+              </button>
+
+            </div>
+
+          </section>
+
+          <section id="about">
+            <AboutUs />
+          </section>
+        </>
+      )}
+
+      {showProductList && (
+        <section id="plants">
+          <ProductList />
+        </section>
+      )}
 
       <section id="cart">
         <CartItem />
